@@ -1,7 +1,7 @@
 # Проект «Большое путешествие»
 
 * Студент: [Gor Sayadyan](https://up.htmlacademy.ru/ecmascript/21/user/817483).
-* Наставник: `Неизвестно`.
+* Наставник: [Alexandr Konotop](https://htmlacademy.ru/profile/sineway).
 
 ---
 
