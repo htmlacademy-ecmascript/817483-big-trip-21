@@ -2,6 +2,7 @@ import './views/brief-view.js';
 import './views/filter-view.js';
 import './views/add-button-view.js';
 import './views/sort-view.js';
+import './views/list-view.js';
 
 
 /**
@@ -24,6 +25,12 @@ const addButtonView = document.querySelector('add-button-view');
  */
 const sortView = document.querySelector('sort-view');
 
+/**
+ * @type { import('./views/list-view.js').default }
+ */
+const listView = document.querySelector('list-view');
+
+listView.render();
 sortView.render();
 addButtonView.render();
 briefView.render();
