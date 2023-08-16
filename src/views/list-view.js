@@ -1,6 +1,7 @@
 import View from './views.js';
 import CardView from './card-view.js';
 import EditorView from './editor-view.js';
+import './list-view.css';
 
 class ListView extends View {
   constructor() {
