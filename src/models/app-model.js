@@ -2,6 +2,7 @@ import Model from './model.js';
 import points from '../data/points.json';
 import offerGroups from '../data/offers.json';
 import destinations from '../data/destination.json';
+import PointModel from './point-model.js';
 
 class AppModel extends Model {
   constructor() {
@@ -37,24 +38,25 @@ class AppModel extends Model {
   }
 
   /**
-   * @returns { Array<Point> }
+   * @returns { Array<PointModel> }
    */
   getPoints() {
-    return this.points;
+
+    return this.points.map((point) => new PointModel(point));
   }
 
   /**
    * @returns { Array<OfferGroup> }
   */
   getOfferGroups() {
-    return this.offerGroups;
+    return structuredClone(this.offerGroups);
   }
 
   /**
    * @returns { Array<Destination> }
   */
   getDestinations() {
-    return this.destinations;
+    return structuredClone(this.destinations);
   }
 }
 
