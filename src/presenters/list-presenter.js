@@ -20,7 +20,39 @@ class ListPresenter extends Presenter {
    * @override
    */
   updateView() {
-    const items = [];
+    const points = this.model.getPoints();
+    const offerGroups = this.model.getOfferGroups();
+    const destinations = this.model.getDestinations();
+
+    const items = points.map((point, index) => {
+      const {offers} = offerGroups.find((group) => group.type === point.type);
+      void point;
+      return {
+        id: point.id,
+
+        types: offerGroups.map((group) => ({
+          value: group.type,
+          isSelected: group.type === point.type
+        })),
+
+        destinations: destinations.map((destination) => ({
+          ...destination,
+          isSelected: destination.id === point.destinationId
+        })),
+
+        dateFrom: point.dateFrom,
+        dateTo: point.dateTo,
+        basePrice: point.basePrice,
+
+        offers: offers.map((offer) => ({
+          ...offer,
+          isSelected: point.offerIds?.includes(offer.id)
+        })),
+
+        isFavorite: point.isFavorite,
+        isEditable: index === 1
+      };
+    });
 
     this.view.setState({items});
   }

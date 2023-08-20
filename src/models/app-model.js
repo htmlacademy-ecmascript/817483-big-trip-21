@@ -6,7 +6,7 @@ import PointModel from './point-model.js';
 
 class AppModel extends Model {
   constructor() {
-    super() // вызов родительского constructor когда вызов new что-то, то ющзаем супер()
+    super()
 
     /**
      * @type { Array<Point> }
@@ -42,7 +42,6 @@ class AppModel extends Model {
    * @returns { Array<PointModel> }
    */
   getPoints() {
-
     return this.points.map((point) => new PointModel(point));
   }
 
