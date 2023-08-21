@@ -1,5 +1,6 @@
 import View from './views.js';
 import {html} from '../utils.js';
+import './editor-view.css';
 
 /**
  * @typedef { import('./list-view').ItemState } State
@@ -230,7 +231,6 @@ class EditorView extends View {
       return '';
     }
 
-    console.log(selectedDestination);
     return html`
       <section class="event__section  event__section--destination">
         <h3 class="event__section-title  event__section-title--destination">Destination</h3>
