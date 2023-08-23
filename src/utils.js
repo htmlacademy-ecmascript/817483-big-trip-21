@@ -30,6 +30,14 @@ function formatDate(value) {
   return dayjs(value).format('MMM D');
 }
 
+/**
+ * @param {dayjs.ConfigType} value
+ * @returns {string}
+ */
+function formatTime(value) {
+  return dayjs(value).format('HH:mn');
+}
+
 // function formatDate(date) {
 
 //   const yearDate = date.toString().split('').slice(0, 10).join('');
@@ -42,4 +50,8 @@ function formatDate(value) {
 //   return date.toString().split('').slice(11, 16).join('');
 // }
 
-export {html};
+export {
+  html,
+  formatDate,
+  formatTime
+};
