@@ -1,5 +1,5 @@
 import View from './views.js';
-import {html} from '../utils.js';
+import {html, formatDate, formatDuration, formatTime} from '../utils.js';
 
 /**
  * @typedef { import('./list-view').ItemState } State
@@ -38,7 +38,7 @@ class CardView extends View {
     const {dateFrom} = this.state;
 
     return html`
-    <time class="event__date" datetime=""></time>
+    <time class="event__date" datetime="${dateFrom}">${formatDate(dateFrom)}</time>
     `;
   }
 
@@ -50,7 +50,12 @@ class CardView extends View {
 
     return html`
       <div class="event__type">
-        <img class="event__type-icon" width="42" height="42" src="img/icons/${types.find((picture) => picture.isSelected).value}.png" alt="Event type icon">
+        <img
+          class="event__type-icon"
+          width="42"
+          height="42"
+          src="img/icons/${types.find((picture) => picture.isSelected).value}.png"
+          alt="Event type icon">
       </div>
     `;
   }
@@ -60,6 +65,7 @@ class CardView extends View {
    */
   createDestinationHtml() {
     const {types, destinations} = this.state;
+
     const selectedType = types.find((type) => type.isSelected);
     const selectedDestination = destinations.find((destination) => destination.isSelected);
 
@@ -72,14 +78,16 @@ class CardView extends View {
    * @returns {string}
    */
   createScheduleHtml() {
+    const {dateFrom, dateTo} = this.state;
+
     return html`
     <div class="event__schedule">
       <p class="event__time">
-        <time class="event__start-time" datetime="2019-03-18T10:30">10:30</time>
+        <time class="event__start-time" datetime="${dateFrom}">${formatTime(dateFrom)}</time>
       —
-        <time class="event__end-time" datetime="2019-03-18T11:00">11:00</time>
+        <time class="event__end-time" datetime="${dateTo}">${formatTime(dateTo)}</time>
       </p>
-      <p class="event__duration">30M</p>
+      <p class="event__duration">${formatDuration(dateFrom, dateTo)}</p>
     </div>
     `;
   }
@@ -88,9 +96,10 @@ class CardView extends View {
    * @returns {string}
    */
   createPriceHtml() {
+    const {basePrice} = this.state;
     return html`
     <p class="event__price">
-      €&nbsp;<span class="event__price-value">20</span>
+      €&nbsp;<span class="event__price-value">${basePrice}</span>
     </p>
     `;
   }
@@ -99,13 +108,21 @@ class CardView extends View {
    * @returns {string}
    */
   createOfferListHtml() {
+    const {offers} = this.state;
+    const selectedOffers = offers.filter((offer) => offer.isSelected);
+    if (!selectedOffers.length) {
+      return '';
+    }
     return html`
     <ul class="event__selected-offers">
+    ${selectedOffers.map((offer) => html`
       <li class="event__offer">
-        <span class="event__offer-title">Order Uber</span>
-          +€&nbsp;
-        <span class="event__offer-price">20</span>
-      </li>
+      <span class="event__offer-title">${offer.title}</span>
+        +€&nbsp;
+      <span class="event__offer-price"${offer.price}</span>
+    </li>
+      `
+  )}
     </ul>
     `;
   }
@@ -114,8 +131,10 @@ class CardView extends View {
    * @returns {string}
    */
   createFavoriteButtonHtml() {
+    const {isFavorite} = this.state;
+
     return html`
-    <button class="event__favorite-btn event__favorite-btn--active" type="button">
+    <button class="event__favorite-btn${isFavorite ? ' event__favorite-btn--active' : ''}" type="button">
     <span class="visually-hidden">Add to favorite</span>
     <svg class="event__favorite-icon" width="28" height="28" viewBox="0 0 28 28">
       <path d="M14 21l-8.22899 4.3262 1.57159-9.1631L.685209 9.67376 9.8855 8.33688 14 0l4.1145 8.33688 9.2003 1.33688-6.6574 6.48934 1.5716 9.1631L14 21z"></path>

@@ -50,7 +50,7 @@ class ListPresenter extends Presenter {
         })),
 
         isFavorite: point.isFavorite,
-        isEditable: index === 5
+        isEditable: index === 3
       };
     });
 
