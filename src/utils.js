@@ -1,3 +1,8 @@
+import dayjs from 'dayjs';
+import durationPlugin from 'dayjs/plugin/duration.js';
+
+dayjs.extend(durationPlugin);
+
 /**
  * @param {TemplateStringsArray} strings
  * @param {...any} values
@@ -5,9 +10,7 @@
  */
 
 function html(strings, ...values) {
-  //функция получает два массива на входе
   return strings.reduce((before, after, index) => {
-    // перебираем первый массив строк, вводим три параметра
     const value = values[index - 1];
 
     if (value === undefined) {
@@ -22,4 +25,65 @@ function html(strings, ...values) {
   });
 }
 
-export {html};
+/**
+ * @param {dayjs.ConfigType} value
+ * @returns {string}
+ */
+function formatDate(value) {
+  return dayjs(value).format('MMM D');
+}
+
+/**
+ * @param {dayjs.ConfigType} value
+ * @returns {string}
+ */
+function formatTime(value) {
+  return dayjs(value).format('HH:mm');
+}
+
+/**
+ * @param {dayjs.ConfigType} valueFrom
+ * @param {dayjs.ConfigType} valueTo
+ * @returns {string}
+ */
+function formatDuration(valueFrom, valueTo) {
+  const ms = dayjs(valueTo).diff(valueFrom);
+  const duration = dayjs.duration(ms);
+  if (duration.days()) {
+    return duration.format('DD[d] HH[h] mm[m]');
+  }
+  if (duration.hours()) {
+    return duration.format('HH[h] mm[m]');
+  }
+
+  return duration.format('mm[m]');
+}
+
+/**
+ *
+ * @param {number} value
+ * @returns {string}
+ */
+function formatNumber(value) {
+  return value.toLocaleString('en');
+}
+
+// function formatDate(date) {
+
+//   const yearDate = date.toString().split('').slice(0, 10).join('');
+//   const reversedDate = yearDate.toString().split('-').reverse().join('/');
+//   return reversedDate;
+
+// }
+
+// function formatTime(date) {
+//   return date.toString().split('').slice(11, 16).join('');
+// }
+
+export {
+  html,
+  formatDate,
+  formatTime,
+  formatDuration,
+  formatNumber
+};
