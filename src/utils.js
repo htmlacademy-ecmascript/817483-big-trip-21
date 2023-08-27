@@ -59,6 +59,15 @@ function formatDuration(valueFrom, valueTo) {
   return duration.format('mm[m]');
 }
 
+/**
+ *
+ * @param {number} value
+ * @returns {string}
+ */
+function formatNumber(value) {
+  return value.toLocaleString('en');
+}
+
 // function formatDate(date) {
 
 //   const yearDate = date.toString().split('').slice(0, 10).join('');
@@ -75,5 +84,6 @@ export {
   html,
   formatDate,
   formatTime,
-  formatDuration
+  formatDuration,
+  formatNumber
 };
