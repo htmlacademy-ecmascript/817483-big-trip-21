@@ -113,6 +113,7 @@ class CardView extends View {
     if (!selectedOffers.length) {
       return '';
     }
+
     return html`
     <ul class="event__selected-offers">
     ${selectedOffers.map((offer) => html`
