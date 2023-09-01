@@ -11,7 +11,7 @@ class EditorView extends View {
   constructor() {
     super();
 
-    this.addEventListener('click', onClick.bind(this));
+    this.addEventListener('click', this.onClick.bind(this));
     // this.classList.add('class1', 'class2');
   }
 
@@ -258,7 +258,6 @@ class EditorView extends View {
       this.dispatch('close');
     }
   }
-}
 }
 
 customElements.define('editor-view', EditorView);
