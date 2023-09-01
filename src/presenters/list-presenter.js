@@ -12,19 +12,36 @@ class ListPresenter extends Presenter {
    */
   constructor(...rest) {
     super(...rest);
+    this.view.addEventListener('open', this.onViewOpen.bind(this));
 
     // this.view.addEventListener('change', this.onViewChange.bind(this));
+  }
+
+  /**
+   * @param {CustomEvent & {
+   *  target: import ('../views/card-view.js').default
+   * }} event
+   */
+  onViewOpen(event) {
+    const params = this.navigation.getParams();
+
+    params.edit = event.target.state.id;
+
+    this.navigation.setParams(params);
+    console.log(params)
   }
 
   /**
    * @override
    */
   updateView() {
+    const params = this.navigation.getParams();
+    console.log(params)
     const points = this.model.getPoints();
     const offerGroups = this.model.getOfferGroups();
     const destinations = this.model.getDestinations();
 
-    const items = points.map((point, index) => {
+    const items = points.map((point) => {
       const {offers} = offerGroups.find((group) => group.type === point.type);
       void point;
       return {
@@ -50,7 +67,7 @@ class ListPresenter extends Presenter {
         })),
 
         isFavorite: point.isFavorite,
-        isEditable: index === 3
+        isEditable: params.edit === point.id
       };
     });
 
