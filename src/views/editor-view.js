@@ -12,7 +12,16 @@ class EditorView extends View {
     super();
 
     this.addEventListener('click', this.onClick.bind(this));
+
     // this.classList.add('class1', 'class2');
+  }
+
+  connectedCallback() {
+    document.addEventListener('keydown', this);
+  }
+
+  disconnectedCallback() {
+    document.removeEventListener('keydown', this);
   }
 
   /**
@@ -255,6 +264,15 @@ class EditorView extends View {
   */
   onClick(event) {
     if (event.target.closest('.event__rollup-btn')) {
+      this.dispatch('close');
+    }
+  }
+
+  /**
+   * @param {KeyboardEvent} event
+    */
+  handleEvent(event) {
+    if (event.key?.startsWith('Esc')) {
       this.dispatch('close');
     }
   }
