@@ -1,6 +1,20 @@
 import View from './views.js';
 import {html} from '../utils.js';
 
+/**
+  * @typedef {{
+  * value: FilterType
+  * isSelectable: boolean
+  * isDisabled: boolean
+  * }} ItemState
+  *
+  * @typedef {{
+  *  items: Array<ItemState>
+  * }} State
+  *
+  * @extends {View<State>}
+  */
+
 class FilterView extends View {
   constructor() {
     super();
