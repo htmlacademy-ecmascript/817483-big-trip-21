@@ -35,8 +35,7 @@ class Navigation extends EventTarget {
   */
   getParams() {
     const url = this.getUrl();
-    console.log(url)
-    console.log(Object.fromEntries(url.searchParams));
+
     return Object.fromEntries(url.searchParams);
   }
 

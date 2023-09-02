@@ -11,7 +11,7 @@ dayjs.extend(durationPlugin);
 
 function html(strings, ...values) {
   return strings.reduce((before, after, index) => {
-    console.log(before)
+
     const value = values[index - 1];
 
     if (value === undefined) {
