@@ -9,7 +9,7 @@ import {html, formatDate, formatDuration, formatTime} from '../utils.js';
 class CardView extends View {
   constructor() {
     super();
-
+    this.addEventListener('click', this.onClick);
     // this.classList.add('class1', 'class2');
   }
 
@@ -113,6 +113,7 @@ class CardView extends View {
     if (!selectedOffers.length) {
       return '';
     }
+
     return html`
     <ul class="event__selected-offers">
     ${selectedOffers.map((offer) => html`
@@ -152,6 +153,18 @@ class CardView extends View {
       <span class="visually-hidden">Open event</span>
     </button>
     `;
+  }
+
+
+  /**
+   * @param {PointerEvent & {
+  *  target: Element
+  * }} event
+  */
+  onClick(event) {
+    if (event.target.closest('.event__rollup-btn')) {
+      this.dispatch('open');
+    }
   }
 }
 

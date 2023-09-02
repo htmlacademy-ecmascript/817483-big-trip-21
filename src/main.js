@@ -12,7 +12,6 @@ import AddButtonPresenter from './presenters/add-button-presenter.js';
 import SortPresenter from './presenters/sort-presenter.js';
 import ListPresenter from './presenters/list-presenter.js';
 
-
 const appModel = new AppModel();
 appModel.ready().then(() => {
   new BriefPresenter(document.querySelector('brief-view'), appModel);
@@ -21,6 +20,7 @@ appModel.ready().then(() => {
   new SortPresenter(document.querySelector('sort-view'), appModel);
   new ListPresenter(document.querySelector('list-view'), appModel);
 });
+
 /**
  * @type { import('./views/brief-view.js').default }
  */
