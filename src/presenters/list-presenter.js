@@ -14,6 +14,7 @@ class ListPresenter extends Presenter {
     super(...rest);
     this.view.addEventListener('open', this.onViewOpen.bind(this));
     this.view.addEventListener('close', this.onViewClose.bind(this));
+    this.view.addEventListener('favorite', this.onViewFavorite.bind(this));
 
     // this.view.addEventListener('change', this.onViewChange.bind(this));
   }
@@ -37,6 +38,19 @@ class ListPresenter extends Presenter {
     delete params.edit;
 
     this.navigation.setParams(params);
+  }
+
+  /**
+   * @param {CustomEvent & {
+  *  target: import ('../views/card-view.js').default
+  * }} event
+  */
+  onViewFavorite(event) {
+    const card = event.target;
+
+    card.state.isFavorite = !card.state.isFavorite;
+    //TO DO: Обновить модель
+    card.render();
   }
 
   /**
