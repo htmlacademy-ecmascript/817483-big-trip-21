@@ -50,7 +50,7 @@ class ListPresenter extends Presenter {
 
     card.state.isFavorite = !card.state.isFavorite;
     //TO DO: Обновить модель
-    console.log(this.model.createPoint());
+    console.log(this.createPoint(card.state));
     card.render();
   }
 
@@ -94,6 +94,26 @@ class ListPresenter extends Presenter {
     });
 
     this.view.setState({items});
+  }
+
+  /**
+ * @param {import('../views/list-view').ItemState} state
+ * @returns {import('../models/point-model.js').default}
+ */
+  createPoint(state) {
+    const point = this.model.createPoint();
+
+    Object.assign(point, {
+      id: state.id,
+      type: state.types.find((item) => item.isSelected).value,
+      destinationId: state.destinations.find((destination) => destination?.isSelected).id,
+      dateFrom: state.dateFrom,
+      dateTo: state.dateTo,
+      offerIds: state.offers.filter((offer) => offer.isSelected).map((item) => item.id),
+      isFavorite: state.isFavorite
+    });
+
+    return point;
   }
 }
 
