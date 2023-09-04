@@ -6,7 +6,7 @@ import PointModel from './point-model.js';
 
 class AppModel extends Model {
   constructor() {
-    super()
+    super();
 
     /**
      * @type { Array<Point> }
@@ -50,6 +50,18 @@ class AppModel extends Model {
    */
   createPoint(data = Object.create(null)) {
     return new PointModel(data);
+  }
+
+  /**
+   * @param {PointModel} model
+   * @returns {Promise<void>}
+   */
+  async updatePoint(model) {
+    // TO DO: Обновить данные на сервере
+    const data = model.toJSON();
+    const index = this.points.findIndex((point) => point.id === data.id);
+
+    this.points.splice(index, 1, data);
   }
 
   /**
