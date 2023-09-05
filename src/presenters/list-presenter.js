@@ -29,7 +29,6 @@ class ListPresenter extends Presenter {
     params.edit = event.target.state.id;
 
     this.navigation.setParams(params);
-    console.log(params)
   }
 
   onViewClose() {
@@ -45,7 +44,6 @@ class ListPresenter extends Presenter {
    */
   updateView() {
     const params = this.navigation.getParams();
-    console.log(params)
     const points = this.model.getPoints();
     const offerGroups = this.model.getOfferGroups();
     const destinations = this.model.getDestinations();
