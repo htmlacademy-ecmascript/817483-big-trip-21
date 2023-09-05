@@ -6,7 +6,7 @@ import PointModel from './point-model.js';
 
 class AppModel extends Model {
   constructor() {
-    super()
+    super();
 
     /**
      * @type { Array<Point> }
@@ -31,7 +31,6 @@ class AppModel extends Model {
     // TODO : получение данных с сервера
     // @ts-ignore
     this.destinations = destinations;
-    console.log(destinations);
     // @ts-ignore
     this.offerGroups = offerGroups;
     // @ts-ignore
@@ -42,7 +41,27 @@ class AppModel extends Model {
    * @returns { Array<PointModel> }
    */
   getPoints() {
-    return this.points.map((point) => new PointModel(point));
+    return this.points.map(this.createPoint);
+  }
+
+  /**
+   * @param {Point} data
+   * @returns {PointModel}
+   */
+  createPoint(data = Object.create(null)) {
+    return new PointModel(data);
+  }
+
+  /**
+   * @param {PointModel} model
+   * @returns {Promise<void>}
+   */
+  async updatePoint(model) {
+    // TO DO: Обновить данные на сервере
+    const data = model.toJSON();
+    const index = this.points.findIndex((point) => point.id === data.id);
+
+    this.points.splice(index, 1, data);
   }
 
   /**

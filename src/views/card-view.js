@@ -163,7 +163,11 @@ class CardView extends View {
   */
   onClick(event) {
     if (event.target.closest('.event__rollup-btn')) {
-      this.dispatch('open');
+      return this.dispatch('open');
+    }
+
+    if (event.target.closest('.event__favorite-btn')) {
+      this.dispatch('favorite');
     }
   }
 }
