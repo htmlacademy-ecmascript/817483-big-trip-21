@@ -14,7 +14,6 @@ class SortPresenter extends Presenter {
     super(...rest);
 
     this.view.addEventListener('change', this.onViewChange.bind(this));
-    // this.view.addEventListener('change', this.onViewChange.bind(this));
   }
 
   /**
@@ -46,8 +45,8 @@ class SortPresenter extends Presenter {
     const params = this.navigation.getParams();
 
     params.sort = event.target.value;
-
     this.navigation.setParams(params);
+    delete params.edit;
   }
 }
 
