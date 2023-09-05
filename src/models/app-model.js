@@ -30,7 +30,7 @@ class AppModel extends Model {
       day: () => 0,
       event: () => 0,
       time: () => 0,
-      price: () => 0,
+      price: (pointA, pointB) => pointB.basePrice - pointA.basePrice,
       offers: () => 0
     };
   }
@@ -46,6 +46,10 @@ class AppModel extends Model {
     this.offerGroups = offerGroups;
     // @ts-ignore
     this.points = points;
+
+    console.table(
+      this.getPoints({sort: 'price'})
+    );
   }
 
   /**
@@ -55,6 +59,7 @@ class AppModel extends Model {
   getPoints(options = {}) {
     const defaultSort = this.sortCallbacks.day;
     const sort = this.sortCallbacks[options.sort] ?? defaultSort ;
+
     return this.points.map(this.createPoint).sort(sort);
   }
 
