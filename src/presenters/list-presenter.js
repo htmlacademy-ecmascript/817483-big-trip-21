@@ -125,13 +125,31 @@ class ListPresenter extends Presenter {
   onViewEdit(event) {
     const editor = event.target;
     const input = event.detail;
+    const offerGroups = this.model.getOfferGroups();
 
     if(input.name === 'event-type') {
+      const {offers} = offerGroups.find((group) => group.type === input.value);
+
+      editor.state.offers = offers.map((offer) => ({
+        ...offer,
+        isSelected: false
+      }));
+
       editor.state.types.forEach((item) => {
         item.isSelected = item.value === input.value;
       });
+
       editor.render();
+      return;
     }
+
+    if(input.name === 'event-destination') {
+      editor.state.destinations.forEach((destination) => {
+        destination.isSelected = destination.name === input.value;
+      });
+    }
+
+    editor.render();
   }
 }
 
