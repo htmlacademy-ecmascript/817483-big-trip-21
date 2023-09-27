@@ -1,5 +1,5 @@
 import View from './views.js';
-import {html} from '../utils.js';
+import {html, createCalendars} from '../utils.js';
 import './editor-view.css';
 
 /**
@@ -23,6 +23,15 @@ class EditorView extends View {
 
   disconnectedCallback() {
     document.removeEventListener('keydown', this);
+  }
+
+  /**
+   * @override
+   */
+  render() {
+    super.render();
+    // @ts-ignore
+    createCalendars(...this.querySelectorAll('.event__input--time'));
   }
 
   /**
