@@ -147,9 +147,18 @@ class ListPresenter extends Presenter {
       editor.state.destinations.forEach((destination) => {
         destination.isSelected = destination.name === input.value;
       });
+      editor.render();
+      return;
     }
 
-    editor.render();
+    if(input.name === 'event-start-time') {
+      editor.state.dateFrom = input.value;
+      return;
+    }
+
+    if(input.name === 'event-start-time') {
+      editor.state.dateTo = input.value;
+    }
   }
 }
 
