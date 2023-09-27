@@ -92,22 +92,14 @@ function createCalendars(inputFrom, inputTo) {
   const calendarFrom = flatpickr(inputFrom, options);
   const calendarTo = flatpickr(inputTo, options);
 
+  calendarFrom.set('onChange', ([date]) => calendarTo.set('minDate', date));
+  calendarTo.set('minDate', calendarFrom.selectedDates.at(0));
+
   return () => {
     calendarFrom.destroy();
     calendarTo.destroy();
   };
 }
-// function formatDate(date) {
-
-//   const yearDate = date.toString().split('').slice(0, 10).join('');
-//   const reversedDate = yearDate.toString().split('-').reverse().join('/');
-//   return reversedDate;
-
-// }
-
-// function formatTime(date) {
-//   return date.toString().split('').slice(11, 16).join('');
-// }
 
 export {
   html,
