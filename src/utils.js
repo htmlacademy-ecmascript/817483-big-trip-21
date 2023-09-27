@@ -77,8 +77,20 @@ function formatNumber(value) {
  * @param {HTMLInputElement} inputTo
  */
 function createCalendars(inputFrom, inputTo) {
-  const calendarFrom = flatpickr(inputFrom);
-  const calendarTo = flatpickr(inputTo);
+
+  /**
+ * @type {import('flatpickr/dist/types/options').Options}
+ */
+  const options = {
+    dateFormat: 'Z',
+    altInput: true,
+    altFormat: 'd/m/y H:i',
+    locale: {firstDayOfWeek: 1},
+    enableTime: true,
+    'time_24hr': true
+  };
+  const calendarFrom = flatpickr(inputFrom, options);
+  const calendarTo = flatpickr(inputTo, options);
 
   return () => {
     calendarFrom.destroy();
