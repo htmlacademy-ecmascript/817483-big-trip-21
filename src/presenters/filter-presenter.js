@@ -23,12 +23,12 @@ class FilterPresenter extends Presenter {
     /**
      * @type {Array<FilterType>}
      */
-    const values = ['everything', 'future', 'past', 'present'];
+    const values = ['everything', 'future', 'present', 'past'];
 
     const items = values.map((value) => ({
       value,
       isSelected: value === 'everything',
-      isDisabled: value === 'future'
+      isDisabled: value === 'present'
     }));
     // @ts-ignore
     this.view.setState({items}); // ругается на типы, надо перепроверить
