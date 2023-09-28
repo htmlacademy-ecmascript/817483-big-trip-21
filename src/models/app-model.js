@@ -106,6 +106,18 @@ class AppModel extends Model {
   getDestinations() {
     return structuredClone(this.destinations);
   }
+
+  /**
+   * @param {PointModel} model
+   * @returns {Promise<void>}
+   */
+  async addPoint(model) {
+    // TO DO: Добавить данные на сервере
+    const data = model.toJSON();
+    data.id = crypto.randomUUID();
+
+    this.points.push(data);
+  }
 }
 
 export default AppModel;

@@ -124,7 +124,6 @@ class ListPresenter extends Presenter {
   }
 
   /**
- * @param {import('../views/list-view').ItemState} state
  * @returns {import('../models/point-model.js').default}
  */
   createDraftPoint() {
@@ -207,8 +206,14 @@ class ListPresenter extends Presenter {
   */
   async onViewSave(event) {
     const editor = event.target;
+    const point = this.createPoint(editor.state);
     await this.model.updatePoint(this.createPoint(editor.state));
-    console.log(editor.state)
+
+    if(editor.state.id === 'draft') {
+      await this.model.addPoint(point);
+    } else {
+      await this.model.updatePoint(point);
+    }
     editor.dispatch('close');
   }
 }
