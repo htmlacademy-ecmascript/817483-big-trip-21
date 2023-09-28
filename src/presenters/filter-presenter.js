@@ -13,7 +13,7 @@ class FilterPresenter extends Presenter {
   constructor(...rest) {
     super(...rest);
 
-    // this.view.addEventListener('change', this.onViewChange.bind(this));
+    this.view.addEventListener('change', this.onViewChange.bind(this));
   }
 
   /**
@@ -29,10 +29,25 @@ class FilterPresenter extends Presenter {
     const items = values.map((value) => ({
       value,
       isSelected: value === filter,
-      isDisabled: value === 'present'
+      isDisabled: false
     }));
     // @ts-ignore
     this.view.setState({items}); // ругается на типы, надо перепроверить
+  }
+
+  /**
+  * @param {Event & {
+  *  target: HTMLInputElement & {
+   *  value: FilterType
+   *  }
+   * }} event
+  */
+  onViewChange(event) {
+    const params = this.navigation.getParams();
+
+    delete params.filter;
+    params.filter = event.target.value;
+    this.navigation.setParams(params);
   }
 }
 
