@@ -44,7 +44,7 @@ class FilterPresenter extends Presenter {
   */
   onViewChange(event) {
     const params = this.navigation.getParams();
-
+    // альтернативный способ - this.navigation.setParams({filter: event.target.value})
     delete params.filter;
     params.filter = event.target.value;
     this.navigation.setParams(params);

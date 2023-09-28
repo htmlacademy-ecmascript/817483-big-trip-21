@@ -1,0 +1,18 @@
+import View from './views.js';
+import {html} from '../utils.js';
+
+class PlaceholderView extends View {
+
+  /**
+   * @override
+   */
+  createHtml() {
+    return html`
+      <p class="trip-events__msg">Click New Event to create your first point</p>
+    `;
+  }
+}
+
+customElements.define('placeholder-view', PlaceholderView);
+
+export default PlaceholderView;
