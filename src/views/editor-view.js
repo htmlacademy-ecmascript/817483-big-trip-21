@@ -334,8 +334,9 @@ class EditorView extends View {
   * }} event
   */
   onReset(event) {
+    const {id} = this.state;
     event.preventDefault();
-    this.dispatch('close');
+    this.dispatch(id === 'draft' ? 'cancel' : 'delete');
   }
 
 }
