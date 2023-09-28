@@ -16,6 +16,7 @@ class ListPresenter extends Presenter {
     this.view.addEventListener('close', this.onViewClose.bind(this));
     this.view.addEventListener('edit', this.onViewEdit.bind(this));
     this.view.addEventListener('favorite', this.onViewFavorite.bind(this));
+    this.view.addEventListener('save', this.onViewSave.bind(this));
 
     // this.view.addEventListener('change', this.onViewChange.bind(this));
   }
@@ -125,6 +126,7 @@ class ListPresenter extends Presenter {
   onViewEdit(event) {
     const editor = event.target;
     const input = event.detail;
+
     const offerGroups = this.model.getOfferGroups();
 
     if(input.name === 'event-type') {
@@ -174,6 +176,18 @@ class ListPresenter extends Presenter {
         }
       });
     }
+  }
+
+  /**
+   * @param {CustomEvent & {
+  *  target: import('../views/editor-view').default
+  * }} event
+  */
+  async onViewSave(event) {
+    const editor = event.target;
+    await this.model.updatePoint(this.createPoint(editor.state));
+    console.log(editor.state)
+    editor.dispatch('close');
   }
 }
 

@@ -15,8 +15,9 @@ class EditorView extends View {
      * @type {Function}
      */
     this.destroyCalendars = null;
-    this.addEventListener('click', this.onClick.bind(this));
+    this.addEventListener('click', this.onClick);
     this.addEventListener('change', this.onClickChange);
+    this.addEventListener('submit', this.onSubmit);
 
     // this.classList.add('class1', 'class2');
   }
@@ -166,6 +167,7 @@ class EditorView extends View {
    */
   createPriceFieldHtml() {
     const {basePrice} = this.state;
+
     return html`
       <div class="event__field-group  event__field-group--price">
         <label class="event__label" for="event-price-1">
@@ -176,6 +178,7 @@ class EditorView extends View {
           class="event__input  event__input--price"
           id="event-price-1"
           type="number"
+          type="text"
           min="0"
           name="event-price"
           value="${basePrice}">
@@ -301,6 +304,16 @@ class EditorView extends View {
   */
   onClickChange(event) {
     this.dispatch('edit', event.target);
+  }
+
+  /**
+   * @param {SubmitEvent & {
+  *  target: HTMLInputElement
+  * }} event
+  */
+  onSubmit(event) {
+    event.preventDefault();
+    this.dispatch('save');
   }
 
 }
