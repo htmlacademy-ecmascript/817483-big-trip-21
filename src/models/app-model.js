@@ -59,8 +59,6 @@ class AppModel extends Model {
   }
 
   /**
-   * @param {{filter?: FilterType}}
-   * @param {{sort?: SortType}}
    * @returns { Array<PointModel> }
    */
   getPoints(options = {}) {
