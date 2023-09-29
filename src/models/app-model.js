@@ -50,15 +50,23 @@ class AppModel extends Model {
    * @returns { Promise<void> }
    */
   async ready() {
-    const [points, offerGroups, destinations] = await Promise.all([
-      this.apiService.getPoints(),
-      this.apiService.getOfferGroups(),
-      this.apiService.getDestinations()
-    ]);
-    this.destinations = destinations;
-    this.offerGroups = offerGroups;
-    this.points = points;
-    this.dispatch('ready');
+    try {
+      const [points, offerGroups, destinations] = await Promise.all([
+        this.apiService.getPoints(),
+        this.apiService.getOfferGroups(),
+        this.apiService.getDestinations()
+      ]);
+
+      this.destinations = destinations;
+      this.offerGroups = offerGroups;
+      this.points = points;
+
+      this.dispatch('ready');
+
+    } catch(error) {
+      this.dispatch('error');
+      throw error;
+    }
   }
 
   /**

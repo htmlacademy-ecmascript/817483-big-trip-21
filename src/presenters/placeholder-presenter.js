@@ -13,6 +13,7 @@ class PlaceholderPresenter extends Presenter {
   constructor(...rest) {
     super(...rest);
     this.model.addEventListener('ready', this.onModelReady.bind(this));
+    this.model.addEventListener('error', this.onModelError.bind(this));
     // this.view.addEventListener('change', this.onViewChange.bind(this));
   }
 
@@ -55,6 +56,12 @@ class PlaceholderPresenter extends Presenter {
 
   onModelReady() {
     this.updateView();
+  }
+
+  onModelError() {
+    this.view.setState({
+      message: 'Failed to load latest route information'
+    });
   }
 }
 
