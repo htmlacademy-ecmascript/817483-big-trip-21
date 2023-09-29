@@ -111,7 +111,7 @@ class ListPresenter extends Presenter {
     const point = this.model.createPoint();
 
     Object.assign(point, {
-      id: state.id,
+      id: (state.id === 'draft') ? undefined : state.id,
       type: state.types.find((item) => item.isSelected).value,
       destinationId: state.destinations.find((destination) => destination?.isSelected).id,
       dateFrom: state.dateFrom,
@@ -180,7 +180,7 @@ class ListPresenter extends Presenter {
       return;
     }
 
-    if(input.name === 'event-start-time') {
+    if(input.name === 'event-end-time') {
       editor.state.dateTo = input.value;
       return;
     }
