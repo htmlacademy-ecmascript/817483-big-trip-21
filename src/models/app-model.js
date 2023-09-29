@@ -95,8 +95,7 @@ class AppModel extends Model {
    * @returns {Promise<void>}
    */
   async updatePoint(model) {
-    // TO DO: Обновить данные на сервере
-    const data = model.toJSON();
+    const data = await this.apiService.updatePoint(model.toJSON());
     const index = this.points.findIndex((point) => point.id === data.id);
 
     this.points.splice(index, 1, data);
@@ -107,14 +106,14 @@ class AppModel extends Model {
    * @returns {Promise<void>}
    */
   async deletePoint(id) {
-    // TO DO: Обновить данные на сервере
+    await this.apiService.deletePoint(id);
     const index = this.points.findIndex((point) => point.id === id);
 
     this.points.splice(index, 1);
   }
 
   /**
-   * @returns { Array<OfferGroup> }
+   * @returns { Array<OfferGroups> }
   */
   getOfferGroups() {
     return structuredClone(this.offerGroups);
