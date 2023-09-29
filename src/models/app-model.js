@@ -20,7 +20,7 @@ class AppModel extends Model {
     this.destinations = [];
 
     /**
-     * @type { Array<OfferGroup> }
+     * @type { Array<OfferGroups> }
      */
     this.offerGroups = [];
 
@@ -58,6 +58,7 @@ class AppModel extends Model {
     this.destinations = destinations;
     this.offerGroups = offerGroups;
     this.points = points;
+    this.dispatch('ready');
   }
 
   /**

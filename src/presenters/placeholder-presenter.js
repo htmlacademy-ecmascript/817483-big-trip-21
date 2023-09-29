@@ -12,7 +12,7 @@ class PlaceholderPresenter extends Presenter {
    */
   constructor(...rest) {
     super(...rest);
-
+    this.model.addEventListener('ready', this.onModelReady.bind(this));
     /**
      * @type {Record<FilterType, string>}
      */
@@ -42,6 +42,19 @@ class PlaceholderPresenter extends Presenter {
       return this.messages[params.filter] ?? this.messages.everything;
     }
     return '';
+  }
+
+  /**
+ * @override
+ */
+  onReady() {
+    this.view.setState({message:
+      'Loading...'
+    });
+  }
+
+  onModelReady() {
+    this.updateView();
   }
 }
 

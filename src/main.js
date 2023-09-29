@@ -16,15 +16,15 @@ import ListPresenter from './presenters/list-presenter.js';
 import PlaceholderPresenter from './presenters/placeholder-presenter.js';
 
 const apiService = new ApiService({authorization: 'Basic sdfwerewss'});
-
 const appModel = new AppModel(apiService);
+new PlaceholderPresenter(document.querySelector('placeholder-view'), appModel);
+
 appModel.ready().then(() => {
   new BriefPresenter(document.querySelector('brief-view'), appModel);
   new FilterPresenter(document.querySelector('filter-view'), appModel);
   new AddButtonPresenter(document.querySelector('add-button-view'), appModel);
   new SortPresenter(document.querySelector('sort-view'), appModel);
   new ListPresenter(document.querySelector('list-view'), appModel);
-  new PlaceholderPresenter(document.querySelector('placeholder-view'), appModel);
 });
 
 /**
