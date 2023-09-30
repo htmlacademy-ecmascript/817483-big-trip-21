@@ -26,7 +26,8 @@ import './list-view.css';
 *  isFavorite: boolean
 *  isEditable: boolean
 *  isSaving?: boolean
-*  isDeleting: boolean
+*  isDeleting?: boolean
+*  isAnimated: boolean
 * }} ItemState
 *
 * @typedef {{
@@ -57,8 +58,14 @@ class ListView extends View {
       view.classList.add('trip-events__item');
       view.setAttribute('role', 'listitem');
       view.setState(item);
-      if(isAnimated) {
-        view.fadeInLeft({delay: index * 100});
+      if(isAnimated || item.isAnimated) {
+        view.fadeInLeft({
+          delay: isAnimated ? (index * 100) : 0
+        });
+
+        if(item.isEditable) {
+          view.fadeInRight();
+        }
       }
 
       return view;

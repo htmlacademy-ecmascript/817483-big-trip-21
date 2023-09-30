@@ -48,7 +48,7 @@ class ApiService extends Service {
   }
 
   /**
- * @returns {Promise<Array<Offer>>}
+ * @returns {Promise<Array<OfferGroups>>}
  */
   async getOfferGroups() {
     const response = await this.request('offers');
