@@ -97,6 +97,17 @@ function formatNumber(value) {
 }
 
 /**
+ * @param {Array<string>} items
+ */
+function formatList(items) {
+  items = structuredClone(items);
+  if(items.length > 3) {
+    items.splice(1, items.length - 2, '...');
+  }
+  return items.join(' - ');
+}
+
+/**
  *
  * @param {HTMLInputElement} inputFrom
  * @param {HTMLInputElement} inputTo
@@ -132,6 +143,7 @@ export {
   formatTime,
   formatDuration,
   formatNumber,
+  formatList,
   createCalendars,
   sanitize
 };
