@@ -15,8 +15,10 @@ class EditorView extends View {
      * @type {Function}
      */
     this.destroyCalendars = null;
-    this.addEventListener('click', this.onClick.bind(this));
+    this.addEventListener('click', this.onClick);
     this.addEventListener('change', this.onClickChange);
+    this.addEventListener('submit', this.onSubmit);
+    this.addEventListener('reset', this.onReset);
 
     // this.classList.add('class1', 'class2');
   }
@@ -166,6 +168,7 @@ class EditorView extends View {
    */
   createPriceFieldHtml() {
     const {basePrice} = this.state;
+
     return html`
       <div class="event__field-group  event__field-group--price">
         <label class="event__label" for="event-price-1">
@@ -175,7 +178,9 @@ class EditorView extends View {
         <input
           class="event__input  event__input--price"
           id="event-price-1"
+          type="number"
           type="text"
+          min="0"
           name="event-price"
           value="${basePrice}">
       </div>
@@ -195,8 +200,15 @@ class EditorView extends View {
    * @returns {string}
    */
   createResetButtonHtml() {
-    return html`
+    const {id} = this.state;
+
+    if(id === 'draft') {
+      return html`
       <button class="event__reset-btn" type="reset">Cancel</button>
+    `;
+    }
+    return html`
+      <button class="event__reset-btn" type="reset">Delete</button>
     `;
   }
 
@@ -204,6 +216,10 @@ class EditorView extends View {
    * @returns {string}
    */
   createCloseButtonHtml() {
+    const {id} = this.state;
+    if(id === 'draft') {
+      return '';
+    }
     return html`
       <button class="event__rollup-btn" type="button">
         <span class="visually-hidden">Close event</span>
@@ -300,6 +316,27 @@ class EditorView extends View {
   */
   onClickChange(event) {
     this.dispatch('edit', event.target);
+  }
+
+  /**
+   * @param {SubmitEvent & {
+  *  target: HTMLInputElement
+  * }} event
+  */
+  onSubmit(event) {
+    event.preventDefault();
+    this.dispatch('save');
+  }
+
+  /**
+   * @param {Event & {
+  *  target: HTMLInputElement
+  * }} event
+  */
+  onReset(event) {
+    const {id} = this.state;
+    event.preventDefault();
+    this.dispatch(id === 'draft' ? 'cancel' : 'delete');
   }
 
 }
