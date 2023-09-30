@@ -13,14 +13,40 @@ class SortPresenter extends Presenter {
   constructor(...rest) {
     super(...rest);
 
-    // this.view.addEventListener('change', this.onViewChange.bind(this));
+    this.view.addEventListener('change', this.onViewChange.bind(this));
   }
 
   /**
    * @override
    */
   updateView() {
-    this.view.render();
+    /**
+     * @type {Array<SortType>}
+     */
+    const values = ['day', 'event', 'offers', 'price', 'time'];
+    const {sort = 'day'} = this.navigation.getParams();
+
+    const items = values.map((value) => ({
+      value,
+      isSelected: value === sort,
+      isDisabled: value === 'event' || value === 'offers'
+    }));
+    this.view.setState({items});
+  }
+
+  /**
+ * @param {Event & {
+ *  target: HTMLInputElement & {
+ *  value: SortType
+ *  }
+ * }} event
+ */
+  onViewChange(event) {
+    const params = this.navigation.getParams();
+
+    params.sort = event.target.value;
+    delete params.edit;
+    this.navigation.setParams(params);
   }
 }
 

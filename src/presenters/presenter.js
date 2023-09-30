@@ -13,7 +13,8 @@ class Presenter {
     this.model = model;
     this.navigation = navigation;
     this.navigation.addEventListener('change', this.onNavigationChange.bind(this));
-    window.queueMicrotask(() => this.updateView());
+    window.queueMicrotask(this.onReady.bind(this));
+    // window.queueMicrotask(() => this.updateView());
   }
 
   /**
@@ -22,6 +23,13 @@ class Presenter {
   updateView() {}
 
   onNavigationChange() {
+    return this.updateView();
+  }
+
+  /**
+ * @abstract
+ */
+  onReady() {
     return this.updateView();
   }
 }

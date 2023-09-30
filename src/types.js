@@ -31,7 +31,7 @@
 * @typedef {{
 *  type: PointType
 *  offers: Array<Offer>
-* }} OfferGroup
+* }} OfferGroups
 */
 
 /**

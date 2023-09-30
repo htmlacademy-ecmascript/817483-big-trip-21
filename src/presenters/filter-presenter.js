@@ -13,14 +13,41 @@ class FilterPresenter extends Presenter {
   constructor(...rest) {
     super(...rest);
 
-    // this.view.addEventListener('change', this.onViewChange.bind(this));
+    this.view.addEventListener('change', this.onViewChange.bind(this));
   }
 
   /**
    * @override
    */
   updateView() {
-    this.view.render();
+    /**
+     * @type {Array<FilterType>}
+     */
+    const values = ['everything', 'future', 'present', 'past'];
+    const {filter = 'everything'} = this.navigation.getParams();
+
+    const items = values.map((value) => ({
+      value,
+      isSelected: value === filter,
+      isDisabled: !this.model.getPoints({filter: value}).length
+    }));
+    // @ts-ignore
+    this.view.setState({items}); // ругается на типы, надо перепроверить
+  }
+
+  /**
+  * @param {Event & {
+  *  target: HTMLInputElement & {
+   *  value: FilterType
+   *  }
+   * }} event
+  */
+  onViewChange(event) {
+    const params = this.navigation.getParams();
+    // альтернативный способ - this.navigation.setParams({filter: event.target.value})
+    delete params.filter;
+    params.filter = event.target.value;
+    this.navigation.setParams(params);
   }
 }
 

@@ -1,13 +1,14 @@
 import Model from './model.js';
-import points from '../data/points.json';
-import offerGroups from '../data/offers.json';
-import destinations from '../data/destination.json';
 import PointModel from './point-model.js';
 
 class AppModel extends Model {
-  constructor() {
-    super()
 
+  /**
+ * @param {import('../services/api-service.js').default} apiService
+ */
+  constructor(apiService) {
+    super();
+    this.apiService = apiService;
     /**
      * @type { Array<Point> }
      */
@@ -19,34 +20,108 @@ class AppModel extends Model {
     this.destinations = [];
 
     /**
-     * @type { Array<OfferGroup> }
+     * @type { Array<OfferGroups> }
      */
     this.offerGroups = [];
+
+    /**
+      * @type {Record<FilterType, (point: PointModel) => boolean>}
+    */
+    this.filterCallbacks = {
+      everything: () => true,
+      future: (point) => point.dateFromInMs > Date.now(),
+      present: (point) => point.dateFromInMs <= Date.now() && point.dateToInMs >= Date.now(),
+      past: (point) => point.dateFromInMs < Date.now()
+    };
+
+    /**
+     * @type {Record<SortType, (pointA: PointModel, pointB: PointModel) => Number>}
+     */
+    this.sortCallbacks = {
+      day: (pointA, pointB) => pointA.dateFromInMs - pointB.dateFromInMs,
+      event: () => 0,
+      time: (pointA, pointB) => pointB.durationInMs - pointA.durationInMs,
+      price: (pointA, pointB) => pointB.basePrice - pointA.basePrice,
+      offers: () => 0
+    };
   }
 
   /**
    * @returns { Promise<void> }
    */
   async ready() {
-    // TODO : получение данных с сервера
-    // @ts-ignore
-    this.destinations = destinations;
-    console.log(destinations);
-    // @ts-ignore
-    this.offerGroups = offerGroups;
-    // @ts-ignore
-    this.points = points;
+    try {
+      const [points, offerGroups, destinations] = await Promise.all([
+        this.apiService.getPoints(),
+        this.apiService.getOfferGroups(),
+        this.apiService.getDestinations()
+      ]);
+
+      this.destinations = destinations;
+      this.offerGroups = offerGroups;
+      this.points = points;
+
+      this.dispatch('ready');
+
+    } catch(error) {
+      this.dispatch('error');
+      throw error;
+    }
   }
 
   /**
    * @returns { Array<PointModel> }
    */
-  getPoints() {
-    return this.points.map((point) => new PointModel(point));
+  getPoints(options = {}) {
+    const defaultFilter = this.filterCallbacks.everything;
+    const defaultSort = this.sortCallbacks.day;
+
+    const filter = this.filterCallbacks[options.filter] ?? defaultFilter;
+    const sort = this.sortCallbacks[options.sort] ?? defaultSort ;
+
+    return this.points.map(this.createPoint).filter(filter).sort(sort);
   }
 
   /**
-   * @returns { Array<OfferGroup> }
+   * @param {Point} data
+   * @returns {PointModel}
+   */
+  createPoint(data = Object.create(null)) {
+    return new PointModel(data);
+  }
+
+  /**
+   * @param {PointModel} model
+   * @returns {Promise<void>}
+   */
+  async updatePoint(model) {
+    this.dispatch('busy');
+    try {
+      const data = await this.apiService.updatePoint(model.toJSON());
+      const index = this.points.findIndex((point) => point.id === data.id);
+      this.points.splice(index, 1, data);
+    } finally {
+      this.dispatch('idle');
+    }
+  }
+
+  /**
+   * @param {string} id
+   * @returns {Promise<void>}
+   */
+  async deletePoint(id) {
+    this.dispatch('busy');
+    try {
+      await this.apiService.deletePoint(id);
+      const index = this.points.findIndex((point) => point.id === id);
+      this.points.splice(index, 1);
+    } finally {
+      this.dispatch('idle');
+    }
+  }
+
+  /**
+   * @returns { Array<OfferGroups> }
   */
   getOfferGroups() {
     return structuredClone(this.offerGroups);
@@ -57,6 +132,20 @@ class AppModel extends Model {
   */
   getDestinations() {
     return structuredClone(this.destinations);
+  }
+
+  /**
+   * @param {PointModel} model
+   * @returns {Promise<void>}
+   */
+  async addPoint(model) {
+    this.dispatch('busy');
+    try {
+      const data = await this.apiService.addPoint(model.toJSON());
+      this.points.push(data);
+    } finally {
+      this.dispatch('idle');
+    }
   }
 }
 
