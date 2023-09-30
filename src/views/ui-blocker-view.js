@@ -20,10 +20,10 @@ class UiBlockerView extends View {
   render() {
     const {isActive} = this.state;
     if(isActive) {
-      this.classList.add('.ui-blocker--on');
+      this.classList.add('ui-blocker--on');
       document.addEventListener('keydown', this);
     } else {
-      this.classList.remove('.ui-blocker--on');
+      this.classList.remove('ui-blocker--on');
       document.removeEventListener('keydown', this);
     }
   }

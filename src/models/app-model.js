@@ -95,8 +95,8 @@ class AppModel extends Model {
    * @returns {Promise<void>}
    */
   async updatePoint(model) {
+    this.dispatch('busy');
     try {
-      this.dispatch('busy');
       const data = await this.apiService.updatePoint(model.toJSON());
       const index = this.points.findIndex((point) => point.id === data.id);
       this.points.splice(index, 1, data);
@@ -110,8 +110,8 @@ class AppModel extends Model {
    * @returns {Promise<void>}
    */
   async deletePoint(id) {
+    this.dispatch('busy');
     try {
-      this.dispatch('busy');
       await this.apiService.deletePoint(id);
       const index = this.points.findIndex((point) => point.id === id);
       this.points.splice(index, 1);
@@ -139,8 +139,8 @@ class AppModel extends Model {
    * @returns {Promise<void>}
    */
   async addPoint(model) {
+    this.dispatch('busy');
     try {
-      this.dispatch('busy');
       const data = await this.apiService.addPoint(model.toJSON());
       this.points.push(data);
     } finally {
