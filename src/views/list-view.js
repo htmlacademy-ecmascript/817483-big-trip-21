@@ -26,6 +26,7 @@ import './list-view.css';
 *  isFavorite: boolean
 *  isEditable: boolean
 *  isSaving?: boolean
+*  isDeleting: boolean
 * }} ItemState
 *
 * @typedef {{
