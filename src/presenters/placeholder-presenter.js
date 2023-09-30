@@ -12,16 +12,8 @@ class PlaceholderPresenter extends Presenter {
    */
   constructor(...rest) {
     super(...rest);
-
-    /**
-     * @type {Record<FilterType, string>}
-     */
-    this.messages = {
-      everything: 'Click New Event to create your first point',
-      future: 'There are no past events now',
-      present: 'There are no present events now',
-      past: 'There are no future events now'
-    };
+    this.model.addEventListener('ready', this.onModelReady.bind(this));
+    this.model.addEventListener('error', this.onModelError.bind(this));
     // this.view.addEventListener('change', this.onViewChange.bind(this));
   }
 
@@ -39,9 +31,37 @@ class PlaceholderPresenter extends Presenter {
     const params = this.navigation.getParams();
     const points = this.model.getPoints(params);
     if(!points.length && params.edit !== 'draft') {
-      return this.messages[params.filter] ?? this.messages.everything;
+    /**
+     * @type {Record<FilterType, string>}
+     */
+      const messages = {
+        everything: 'Click New Event to create your first point',
+        future: 'There are no past events now',
+        present: 'There are no present events now',
+        past: 'There are no future events now'
+      };
+      return messages[params.filter] ?? messages.everything;
     }
     return '';
+  }
+
+  /**
+ * @override
+ */
+  onReady() {
+    this.view.setState({message:
+      'Loading...'
+    });
+  }
+
+  onModelReady() {
+    this.updateView();
+  }
+
+  onModelError() {
+    this.view.setState({
+      message: 'Failed to load latest route information'
+    });
   }
 }
 

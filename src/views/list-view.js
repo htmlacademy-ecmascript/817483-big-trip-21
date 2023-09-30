@@ -25,6 +25,7 @@ import './list-view.css';
 *  offers: Array<Selectable<Offer>>
 *  isFavorite: boolean
 *  isEditable: boolean
+*  isSaving?: boolean
 * }} ItemState
 *
 * @typedef {{

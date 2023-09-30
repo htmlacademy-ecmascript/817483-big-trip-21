@@ -1,13 +1,14 @@
 import Model from './model.js';
-import points from '../data/points.json';
-import offerGroups from '../data/offers.json';
-import destinations from '../data/destination.json';
 import PointModel from './point-model.js';
 
 class AppModel extends Model {
-  constructor() {
-    super();
 
+  /**
+ * @param {import('../services/api-service.js').default} apiService
+ */
+  constructor(apiService) {
+    super();
+    this.apiService = apiService;
     /**
      * @type { Array<Point> }
      */
@@ -19,7 +20,7 @@ class AppModel extends Model {
     this.destinations = [];
 
     /**
-     * @type { Array<OfferGroup> }
+     * @type { Array<OfferGroups> }
      */
     this.offerGroups = [];
 
@@ -49,13 +50,23 @@ class AppModel extends Model {
    * @returns { Promise<void> }
    */
   async ready() {
-    // TODO : получение данных с сервера
-    // @ts-ignore
-    this.destinations = destinations;
-    // @ts-ignore
-    this.offerGroups = offerGroups;
-    // @ts-ignore
-    this.points = points;
+    try {
+      const [points, offerGroups, destinations] = await Promise.all([
+        this.apiService.getPoints(),
+        this.apiService.getOfferGroups(),
+        this.apiService.getDestinations()
+      ]);
+
+      this.destinations = destinations;
+      this.offerGroups = offerGroups;
+      this.points = points;
+
+      this.dispatch('ready');
+
+    } catch(error) {
+      this.dispatch('error');
+      throw error;
+    }
   }
 
   /**
@@ -84,8 +95,7 @@ class AppModel extends Model {
    * @returns {Promise<void>}
    */
   async updatePoint(model) {
-    // TO DO: Обновить данные на сервере
-    const data = model.toJSON();
+    const data = await this.apiService.updatePoint(model.toJSON());
     const index = this.points.findIndex((point) => point.id === data.id);
 
     this.points.splice(index, 1, data);
@@ -96,14 +106,14 @@ class AppModel extends Model {
    * @returns {Promise<void>}
    */
   async deletePoint(id) {
-    // TO DO: Обновить данные на сервере
+    await this.apiService.deletePoint(id);
     const index = this.points.findIndex((point) => point.id === id);
 
     this.points.splice(index, 1);
   }
 
   /**
-   * @returns { Array<OfferGroup> }
+   * @returns { Array<OfferGroups> }
   */
   getOfferGroups() {
     return structuredClone(this.offerGroups);
@@ -121,9 +131,7 @@ class AppModel extends Model {
    * @returns {Promise<void>}
    */
   async addPoint(model) {
-    // TO DO: Добавить данные на сервере
-    const data = model.toJSON();
-    data.id = crypto.randomUUID();
+    const data = await this.apiService.addPoint(model.toJSON());
 
     this.points.push(data);
   }
