@@ -22,8 +22,8 @@ class BriefPresenter extends Presenter {
   updateView() {
     this.view.setState({
       destinationNames: this.getDestinationNames(),
-      // dateFrom,
-      // dateTo,
+      dateFrom: this.getDateFrom(),
+      dateTo: this.getDateTo(),
       // totalCost
     });
   }
@@ -43,6 +43,22 @@ class BriefPresenter extends Presenter {
       const next = list[index + 1];
       return name !== next;
     });
+  }
+
+  /**
+ * @returns {string}
+ */
+  getDateFrom() {
+    const points = this.model.getPoints();
+    return points.at(0)?.dateFrom;
+  }
+
+  /**
+ * @returns {string}
+ */
+  getDateTo() {
+    const points = this.model.getPoints();
+    return points.at(-1)?.dateTo;
   }
 }
 
