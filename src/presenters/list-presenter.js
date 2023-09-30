@@ -58,7 +58,8 @@ class ListPresenter extends Presenter {
    */
   updateView() {
     const params = this.navigation.getParams();
-    const points = this.model.getPoints();
+
+    const points = this.model.getPoints(params);
     const offerGroups = this.model.getOfferGroups();
     const destinations = this.model.getDestinations();
 
