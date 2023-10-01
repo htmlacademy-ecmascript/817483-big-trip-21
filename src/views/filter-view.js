@@ -17,6 +17,7 @@ import {html} from '../utils.js';
 class FilterView extends View {
   constructor() {
     super();
+    this.classList.add('trip-filters');
   }
 
   createHtml() {

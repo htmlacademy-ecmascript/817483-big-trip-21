@@ -23,7 +23,7 @@ class PointModel extends Model {
    * @type {number}
    */
   get dateFromInMs() {
-    return Date.parse(this.dateFrom); // где-то что-то перепутано, т.к. для сортировки надо обращаться к dateFrom
+    return Date.parse(this.dateFrom);
   }
 
   /**

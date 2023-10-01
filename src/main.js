@@ -29,35 +29,3 @@ appModel.ready().then(() => {
   new ListPresenter(document.querySelector('list-view'), appModel);
   new UiBlockerPresenter(document.querySelector('ui-blocker-view'), appModel);
 });
-
-/**
- * @type { import('./views/brief-view.js').default }
- */
-const briefView = document.querySelector('brief-view');
-
-/**
- * @type { import('./views/filter-view.js').default }
- */
-const filterView = document.querySelector('filter-view');
-
-/**
- * @type { import('./views/add-button-view.js').default }
- */
-const addButtonView = document.querySelector('add-button-view');
-
-/**
- * @type { import('./views/sort-view.js').default }
- */
-const sortView = document.querySelector('sort-view');
-
-/**
- * @type { import('./views/list-view.js').default }
- */
-const listView = document.querySelector('list-view');
-
-listView.render();
-sortView.render();
-addButtonView.render();
-briefView.render();
-filterView.render();
-

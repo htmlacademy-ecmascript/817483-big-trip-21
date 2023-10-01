@@ -27,7 +27,6 @@ class BriefView extends View {
       return '';
     }
     return html`
-    <section class="trip-main__trip-info  trip-info">
       <div class="trip-info__main">
         <h1 class="trip-info__title">${formatList(destinationNames)}</h1>
 
@@ -37,7 +36,6 @@ class BriefView extends View {
       <p class="trip-info__cost">
         Total: €&nbsp;<span class="trip-info__cost-value">${formatNumber(totalCost)}</span>
       </p>
-    </section>
     `;
   }
 }

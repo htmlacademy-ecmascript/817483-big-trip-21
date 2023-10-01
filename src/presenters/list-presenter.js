@@ -18,8 +18,6 @@ class ListPresenter extends Presenter {
     this.view.addEventListener('favorite', this.onViewFavorite.bind(this));
     this.view.addEventListener('save', this.onViewSave.bind(this));
     this.view.addEventListener('delete', this.onViewDelete.bind(this));
-
-    // this.view.addEventListener('change', this.onViewChange.bind(this));
   }
 
   /**

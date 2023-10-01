@@ -31,8 +31,8 @@ class FilterPresenter extends Presenter {
       isSelected: value === filter,
       isDisabled: !this.model.getPoints({filter: value}).length
     }));
-    // @ts-ignore
-    this.view.setState({items}); // ругается на типы, надо перепроверить
+
+    this.view.setState({items});
   }
 
   /**
