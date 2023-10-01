@@ -27,7 +27,7 @@ class SortView extends View {
   createHtml() {
     return html`
           ${this.state.items.map((item) => html`
-          <div class="trip-sort__item  trip-sort__item--day">
+          <div class="trip-sort__item  trip-sort__item--${item.value}">
           <input
             id="sort-${item.value}"
             class="trip-sort__input  visually-hidden"
