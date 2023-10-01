@@ -1,5 +1,5 @@
 import View from './views.js';
-import {html, formatDate, formatDuration, formatTime} from '../utils.js';
+import {html, formatDate, formatDuration, formatTime, formatNumber} from '../utils.js';
 
 /**
  * @typedef { import('./list-view').ItemState } State
@@ -98,7 +98,7 @@ class CardView extends View {
     const {basePrice} = this.state;
     return html`
     <p class="event__price">
-      €&nbsp;<span class="event__price-value">${basePrice}</span>
+      €&nbsp;<span class="event__price-value">${formatNumber(basePrice)}</span>
     </p>
     `;
   }
