@@ -38,7 +38,7 @@ class View extends HTMLElement {
    * @returns {boolean}
    */
   dispatch(type, detail = null) {
-    const event = new CustomEvent(type, { // позволяет передать доп данные, благодаря CustomEvent();
+    const event = new CustomEvent(type, {
       detail,
       bubbles: true,
       cancelable: true

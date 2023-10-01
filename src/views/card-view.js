@@ -10,7 +10,6 @@ class CardView extends View {
   constructor() {
     super();
     this.addEventListener('click', this.onClick);
-    // this.classList.add('class1', 'class2');
   }
 
   /**

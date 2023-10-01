@@ -23,7 +23,7 @@ class SortPresenter extends Presenter {
     /**
      * @type {Array<SortType>}
      */
-    const values = ['day', 'event', 'offers', 'price', 'time'];
+    const values = ['day', 'event', 'time', 'price', 'offers'];
     const {sort = 'day'} = this.navigation.getParams();
 
     const items = values.map((value) => ({

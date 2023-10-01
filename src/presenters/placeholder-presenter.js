@@ -14,7 +14,6 @@ class PlaceholderPresenter extends Presenter {
     super(...rest);
     this.model.addEventListener('ready', this.onModelReady.bind(this));
     this.model.addEventListener('error', this.onModelError.bind(this));
-    // this.view.addEventListener('change', this.onViewChange.bind(this));
   }
 
   /**
