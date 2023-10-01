@@ -31,7 +31,7 @@ class AppModel extends Model {
       everything: () => true,
       future: (point) => point.dateFromInMs > Date.now(),
       present: (point) => point.dateFromInMs <= Date.now() && point.dateToInMs >= Date.now(),
-      past: (point) => point.dateFromInMs < Date.now()
+      past: (point) => point.dateToInMs < Date.now()
     };
 
     /**
